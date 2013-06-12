@@ -1,7 +1,7 @@
 package com.leed.reader;
 
 import java.util.ArrayList;
- 
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,6 +16,8 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.app.Notification;
+import android.app.NotificationManager;
  
 public class MainActivity extends Activity 
 {
@@ -65,12 +67,28 @@ public class MainActivity extends Activity
         context = this;
         
         Toast.makeText(this, "bienvenue",Toast.LENGTH_LONG).show();
+		// sample notification
+		NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);        
+		/*
+		Notification notification = new Notification.Builder(context)
+			.setContentTitle("New articles available")
+			.setSmallIcon(R.drawable.logo)
+			.setVibrate(new long[]{0,200})
+			.build();
+		*/
+		Notification notification = new Notification(R.drawable.logo, "New articles availables", System.currentTimeMillis());
+		notification.vibrate = new long[]{0,200};
+		System.out.println("starting notification");
+		notificationManager.notify(0,notification);
+		//---
+ 
         
         connection = new APIConnection(context);
         
         getParameters();
         
         init();
+
     }
  
     public boolean onCreateOptionsMenu(Menu menu) 
